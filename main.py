@@ -111,6 +111,22 @@ class Game():
             print('|' + ''.join(rendered_row) + '|')
         print('-'*(self.width+2))
 
+    def get_next_state(self):
+        """
+        This will look at the current state of the board
+         and update each cell according to the positions
+         of the cells in the snake body
+        """
+        
+        direction_found = False
+        while not direction_found:
+            new_direction = directions[random.randint(0,3)]
+            new_anchor = (self.snake.anchor[0] + new_direction[0],
+                          self.snake.anchor[1] + new_direction[1])
+            if self.in_boundary(new_anchor) and not self.snake.inside_snake(new_anchor):
+                self.snake.take_step(new_anchor)
+                direction_found = True
+
     def play_game(self):
 
         while True:
