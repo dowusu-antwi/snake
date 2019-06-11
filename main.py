@@ -12,8 +12,8 @@ User controls snake avatar that grows each time
 import time
 import random
 
-snake_directions = {'UP': (-1,0), 'DOWN': (1,0),
-                    'RIGHT': (0,1), 'LEFT': (0, -1)}
+snake_directions = {'up': (-1,0), 'down': (1,0),
+                    'right': (0,1), 'left': (0, -1)}
 directions = [(-1,0), (1,0), (0,1), (0,-1)]
 
 class Snake():
@@ -73,7 +73,7 @@ class Game():
         self.height = height
         self.board = self.make_empty_board(width, height)
 
-        self.snake = Snake([(0,0), (0,1), (0,2), (0,3), (0,4), (0,5)], snake_directions['DOWN'])
+        self.snake = Snake([(0,0), (0,1), (0,2), (0,3), (0,4), (0,5)], 'down')
 
     def make_empty_board(self, width, height):
         """
@@ -111,7 +111,7 @@ class Game():
             print('|' + ''.join(rendered_row) + '|')
         print('-'*(self.width+2))
 
-    def get_next_state(self):
+    def get_next_state(self, keypress):
         """
         This will look at the current state of the board
          and update each cell according to the positions
@@ -120,12 +120,14 @@ class Game():
         
         direction_found = False
         while not direction_found:
-            new_direction = directions[random.randint(0,3)]
+            rand_direction = directions[random.randint(0,3)]
+            new_direction = snake_directions[keypress]
             new_anchor = (self.snake.anchor[0] + new_direction[0],
                           self.snake.anchor[1] + new_direction[1])
             if self.in_boundary(new_anchor) and not self.snake.inside_snake(new_anchor):
                 self.snake.take_step(new_anchor)
                 direction_found = True
+        print("keypress: %s" % keypress)
 
     def play_game(self):
 
