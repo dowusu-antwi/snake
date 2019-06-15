@@ -24,7 +24,7 @@ class Snake():
         self.direction = direction
         self.body_points = set(body)
 
-    def take_step(self, position):
+    def take_step(self, position, mouse_eaten):
         """
         This will update the snake by adding a new position
          at its head and popping off the old position, all
@@ -40,7 +40,12 @@ class Snake():
         #  off the back (snake moves around board)
         end = self.body[0]
         self.body = self.body[1:] + [position]
-        self.body_points.remove(end)
+
+        # only pops off the back if a mouse hasn't
+        #  been eaten
+        if not mouse_eaten:
+            self.body_points.remove(end)
+
         self.body_points.add(position)
 
     def inside_snake(self, point):
@@ -73,7 +78,9 @@ class Game():
         self.height = height
         self.board = self.make_empty_board(width, height)
 
-        self.snake = Snake([(0,0), (0,1), (0,2), (0,3), (0,4), (0,5)], 'down')
+        self.snake = Snake([(0,i) for i in range(60)], 'down')
+
+        self.mice = self.generate_mice(1)
 
     def make_empty_board(self, width, height):
         """
@@ -91,6 +98,22 @@ class Game():
         row,col = point
         return ((row>=0 and row<self.height) and
                 (col>=0 and col<self.width))
+
+    def generate_mice(self, mice_count):
+        """
+        This will generate a number of mice and put them
+         all in random places on the game board
+        """
+
+        pass
+
+    def is_anchor_a_mouse(self, anchor):
+        """
+        This returns true if the given anchor position is
+         occupied by a Mouse
+        """
+
+        pass
 
     def render_board(self):
         """
@@ -117,16 +140,25 @@ class Game():
          and update each cell according to the positions
          of the cells in the snake body
         """
-        
+       
+        # this looks for a new direction by getting the keypress
+        #  and computing the next anchor, only updating if the
+        #  next anchor is a valid anchor 
         direction_found = False
         while not direction_found:
-            rand_direction = directions[random.randint(0,3)]
             new_direction = snake_directions[keypress]
             new_anchor = (self.snake.anchor[0] + new_direction[0],
                           self.snake.anchor[1] + new_direction[1])
+
             if self.in_boundary(new_anchor) and not self.snake.inside_snake(new_anchor):
-                self.snake.take_step(new_anchor)
+
+                # this will check for a mouse in the new position,
+                #  and if one is found, it will increment the snake's
+                #  length by 1 by not removing the snake's end
+                mouse_eaten = self.is_anchor_a_mouse(anchor)
+                self.snake.take_step(new_anchor, mouse_eaten)
                 direction_found = True
+
         print("keypress: %s" % keypress)
 
     def play_game(self):
