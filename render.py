@@ -89,7 +89,7 @@ class App(QtGui.QWidget):
                     painter.setBrush(QtGui.QColor(200,100,40))
                 elif (row,col) in self.game.snake.body_points:
                     painter.setBrush(QtGui.QColor(40,50,200))
-                elif __ == 'm':
+                elif self.game.is_anchor_a_mouse((row, col)):
                     painter.setBrush(QtGui.QColor(50,40,150))
                 else:
                     painter.setBrush(QtGui.QColor(200,200,0))
