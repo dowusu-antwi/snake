@@ -47,8 +47,8 @@ class Snake():
             self.body_points.remove(end)
         else:
             self.body = self.body + [position]
-            new_anchor = self.mouse.get_new_anchor(self)
-            self.mouse.is_eaten(new_anchor)
+            new_anchor = mouse_eaten.get_new_anchor(self)
+            mouse_eaten.is_eaten(new_anchor)
 
         self.body_points.add(position)
 
@@ -103,7 +103,7 @@ class Game():
         self.height = height
         self.board = self.make_empty_board(width, height)
 
-        self.snake = Snake([(0,i) for i in range(2)], 'down')
+        self.snake = Snake([(0,i) for i in range(5)], 'down')
 
         self.mice = self.generate_mice(1)
 
@@ -213,7 +213,8 @@ class Game():
                 new_anchor = (self.snake.anchor[0] + new_direction[0],
                               self.snake.anchor[1] + new_direction[1])
                 if self.in_boundary(new_anchor) and not self.snake.inside_snake(new_anchor):
-                    self.snake.take_step(new_anchor)
+                    mouse_eaten = self.is_anchor_a_mouse(new_anchor)
+                    self.snake.take_step(new_anchor, mouse_eaten)
                     direction_found = True
 
 if __name__ == "__main__":
