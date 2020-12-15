@@ -1,4 +1,4 @@
 # snake
 
-snake game in terminal
+snake game with PyQt5
 run ./render.py to play snake
