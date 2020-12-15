@@ -99,7 +99,10 @@ class App(QtWidgets.QWidget):
         # this will get the current keypress and pass
         #  it in as a parameter to get the next state
         keypress = self.current_keypress
-        self.game.get_next_state(keypress)
+        state = self.game.get_next_state(keypress)
+        if state == "GAME OVER":
+          print("Game over, stopping game from renderer...")
+          self.timer.stop()
 
     def draw_objects(self, painter):
         """

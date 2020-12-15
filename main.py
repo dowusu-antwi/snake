@@ -180,7 +180,10 @@ class Game():
          and update each cell according to the positions
          of the cells in the snake body
         """
-       
+ 
+        print("keypress: %s" % keypress)
+        print("mice: %s" % self.mice)      
+
         # this looks for a new direction by getting the keypress
         #  and computing the next anchor, only updating if the
         #  next anchor is a valid anchor 
@@ -202,13 +205,12 @@ class Game():
             elif self.snake.inside_snake(new_anchor):
 
                 print("Snake ran into itself!")
+                return "GAME OVER"
 
             elif not self.in_boundary(new_anchor):
 
                 print("Snake ran into boundary!")
-
-        print("keypress: %s" % keypress)
-        print("mice: %s" % self.mice)
+                return "GAME OVER"
 
     def play_game(self):
 
