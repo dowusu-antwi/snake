@@ -199,6 +199,14 @@ class Game():
                 self.snake.take_step(new_anchor, mouse_eaten)
                 direction_found = True
 
+            elif self.snake.inside_snake(new_anchor):
+
+                print("Snake ran into itself!")
+
+            elif not self.in_boundary(new_anchor):
+
+                print("Snake ran into boundary!")
+
         print("keypress: %s" % keypress)
         print("mice: %s" % self.mice)
 

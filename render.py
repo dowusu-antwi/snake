@@ -10,15 +10,15 @@ Author: dowusu
 
 import sys
 import main
-from PyQt4 import QtGui,QtCore
+from PyQt5 import QtGui,QtCore,QtWidgets
 
-class App(QtGui.QWidget):
+class App(QtWidgets.QWidget):
     """
     This is the main widget class
     """
 
     def __init__(self, window_dim):
-        self.app = QtGui.QApplication(sys.argv)
+        self.app = QtWidgets.QApplication(sys.argv)
         super(App,self).__init__()
 
         self.setWindowTitle("Snake")
@@ -67,7 +67,7 @@ class App(QtGui.QWidget):
         super(App, self).keyPressEvent(event)
         if event.key() in self.keypress_dict:
             self.current_keypress = self.keypress_dict[event.key()]
-        self.game.get_next_state(self.current_keypress)
+        #self.game.get_next_state(self.current_keypress) # this only updates on keypress!
 
     def draw_rectangles(self, painter):
         """
